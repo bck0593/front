@@ -21,6 +21,13 @@ jobs:
 
       - run: npm run export
 
+      # GitHub Marketplace APIへの通信確認
+      - name: Test GitHub Marketplace API access
+        run: |
+          echo "Testing access to GitHub Marketplace API..."
+          curl -v https://api.github.com/repos/actions/upload-artifact || echo "Failed to access GitHub API"
+          curl -v https://api.github.com/repos/actions/upload-artifact/releases/latest || echo "Failed to access GitHub API"
+
       - uses: actions/upload-artifact@v2
         with:
           name: static-site
