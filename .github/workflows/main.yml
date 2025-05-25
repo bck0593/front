@@ -20,17 +20,18 @@ jobs:
 
       - run: npm run build
 
-      # outディレクトリの中身を確認（デバッグ用）
-      - run: ls -la out || echo "'out' directory does not exist"
+      - run: npm run export   # ← ここ重要：'out' フォルダ生成
 
-      # outディレクトリの存在と中身のチェック
+      - run: |
+          echo "=== out directory contents ==="
+          ls -la out || echo "'out' directory does not exist"
+
       - run: |
           if [ ! -d "out" ] || [ -z "$(ls -A out 2>/dev/null)" ]; then
             echo "Error: 'out' directory is missing or empty."
             exit 1
           fi
 
-      # outディレクトリをartifactとしてアップロード
       - uses: actions/upload-artifact@v3
         with:
           name: static-site
