@@ -1,4 +1,4 @@
-name: Build and Upload Static Site
+name: Build Static Site
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-upload:
+  build:
     runs-on: ubuntu-latest
 
     steps:
