@@ -1,4 +1,4 @@
-name: Build and Deploy Static Site
+name: Build and Upload Static Site
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build-and-upload:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,29 +20,18 @@ jobs:
 
       - run: npm run build
 
-      # ビルド成果物確認（outフォルダ）
-      - run: ls -la out
+      # outディレクトリの中身を確認（デバッグ用）
+      - run: ls -la out || echo "'out' directory does not exist"
 
-      # outフォルダの存在と中身チェック
+      # outディレクトリの存在と中身のチェック
       - run: |
-          if [ ! -d "out" ] || [ -z "$(ls -A out)" ]; then
+          if [ ! -d "out" ] || [ -z "$(ls -A out 2>/dev/null)" ]; then
             echo "Error: 'out' directory is missing or empty."
             exit 1
           fi
 
-      # ビルド成果物アップロード（必須でなければ省略可）
-      - uses: actions/upload-artifact@v3.2.0
+      # outディレクトリをartifactとしてアップロード
+      - uses: actions/upload-artifact@v3
         with:
           name: static-site
           path: out
-
-      # ↓ここからデプロイ処理（例）↓
-
-      # outフォルダの中身を表示（デプロイ前確認）
-      - run: ls -la out
-
-      # 例：Netlify CLIでデプロイ（適宜置き換えてください）
-      # - run: npx netlify deploy --dir=out --prod --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
-
-      # 例：Azure Static Web Apps CLIでデプロイ（適宜置き換え）
-      # - run: npx swa deploy ./out --app-name your-app-name --token ${{ secrets.AZURE_TOKEN }}
