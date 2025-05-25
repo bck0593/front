@@ -21,8 +21,12 @@ jobs:
 
       - run: npm run export
 
-      # ビルド成果物(out)の中身を確認
-      - run: ls -la out
+      # outディレクトリの存在と中身をチェック
+      - run: |
+          if [ ! -d "out" ] || [ -z "$(ls -A out)" ]; then
+            echo "Error: 'out' directory is missing or empty."
+            exit 1
+          fi
 
       - uses: actions/upload-artifact@v3
         with:
