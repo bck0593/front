@@ -1,3 +1,10 @@
+name: Build and Deploy to Azure Static Web Apps
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,10 +21,26 @@ jobs:
 
       - run: npm run export
 
-      # ここで out フォルダの中身を確認
+      # ビルド成果物(out)の中身を確認
       - run: ls -la out
 
       - uses: actions/upload-artifact@v3
         with:
           name: static-site
           path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: static-site
+          path: out
+
+      - uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: "upload"
+          app_location: "."
+          output_location: "out"
