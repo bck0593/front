@@ -1,4 +1,4 @@
-name: Build and Upload Static Site
+name: Build and Deploy Static Site
 
 on:
   push:
@@ -6,44 +6,49 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # ソースコードをチェックアウト
+      - uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      # Node.js 18 をセットアップ
+      - uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
+      # 依存関係インストール
+      - run: npm install
 
-      - name: Build Next.js app
-        run: npm run build
+      # Next.js のビルド
+      - run: npm run build
 
-      - name: Export static files
-        run: npm run export
+      # (next exportはNext.jsのバージョンによっては不要、または設定でexportする)
+      # もし使うなら有効化、最新のNext.jsではnext.config.jsで設定が必要
+      # - run: npm run export
 
-      - name: Check 'out' directory contents
-        run: |
-          if [ ! -d "out" ]; then
-            echo "Error: 'out' directory is missing."
+      # 'out'ディレクトリの内容を確認
+      - run: ls -la out
+
+      # 'out'フォルダの存在と中身のチェック
+      - run: |
+          if [ ! -d "out" ] || [ -z "$(ls -A out)" ]; then
+            echo "Error: 'out' directory is missing or empty."
             exit 1
-          elif [ -z "$(ls -A out)" ]; then
-            echo "Error: 'out' directory is empty."
-            echo "Current directory contents:"
-            ls -la
-            exit 1
-          else
-            echo "'out' directory exists and has files:"
-            ls -la out
           fi
 
-      - name: Upload static site artifact
-        uses: actions/upload-artifact@v3
+      # ビルド成果物をアップロード（任意。別ジョブで使うなら）
+      - uses: actions/upload-artifact@v3
         with:
           name: static-site
           path: out
+
+      # Azure Static Web Appsへデプロイ（例）
+      - uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/"          # Next.jsのプロジェクトルートに合わせて変更
+          output_location: "out"    # next exportの出力先に合わせる
