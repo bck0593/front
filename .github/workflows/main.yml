@@ -39,8 +39,15 @@ jobs:
             exit 1
           fi
 
-      - name: Upload static site as artifact
-        uses: actions/upload-artifact@v3.1.2  # ← ここがポイント
+      - name: Manually download upload-artifact action
+        run: |
+          mkdir -p ./.github/actions
+          cd ./.github/actions
+          git clone https://github.com/actions/upload-artifact.git
+          cd ../../..
+
+      - name: Upload static site manually
+        uses: ./\.github/actions/upload-artifact
         with:
           name: static-site
           path: out
