@@ -1,14 +1,6 @@
-name: Build and Deploy Next.js App to Azure
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,21 +10,17 @@ jobs:
         with:
           node-version: '18'
 
-      # .env.localを生成（環境変数を渡す）
       - name: Create .env.local
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.FASTAPI_URL }}" > .env.local
 
-      - name: Install dependencies
+      # 依存関係だけインストールしてテストやlintしたい場合はここで
+      - name: Install dependencies (for test only)
         run: npm ci
 
-      - name: Build project
-        run: npm run build
-
-      # .next, node_modules, package.json, next.config.js, public など本番に必要なものをzipでまとめる
-      - name: Archive production build
+      - name: Archive app for deployment
         run: |
-          zip -r build.zip .next node_modules public package.json next.config.js .env.local
+          zip -r build.zip .env.local package.json package-lock.json next.config.js public src
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
