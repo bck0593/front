@@ -1,4 +1,4 @@
-name: Build and Upload Static Site
+name: Build and Upload SSR Site
 
 on:
   push:
@@ -24,30 +24,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Export static site
-        run: npm run export
-
-      - name: Show contents of out directory
-        run: |
-          echo "=== out directory contents ==="
-          ls -la out || echo "'out' directory does not exist"
-
-      - name: Check if 'out' directory exists and is not empty
-        run: |
-          if [ ! -d "out" ] || [ -z "$(ls -A out 2>/dev/null)" ]; then
-            echo "Error: 'out' directory is missing or empty."
-            exit 1
-          fi
-
-      - name: Manually download upload-artifact action
-        run: |
-          mkdir -p ./.github/actions
-          cd ./.github/actions
-          git clone https://github.com/actions/upload-artifact.git
-          cd ../../..
-
-      - name: Upload static site manually
-        uses: ./\.github/actions/upload-artifact
+      - name: Upload .next directory
+        uses: actions/upload-artifact@v3
         with:
-          name: static-site
-          path: out
+          name: next-build
+          path: .next
