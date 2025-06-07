@@ -22,11 +22,11 @@ jobs:
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.FASTAPI_URL }}" > .env.local
 
-      # 任意: テストやLintを実行したい場合のみ
+      # 任意: テストやLintを実行したい場合だけ
       - name: Install dependencies (for test only)
         run: npm ci
 
-      # 必要な本番ファイルだけをzipアーカイブ
+      # デプロイに必要なファイルだけをzipする
       - name: Archive app for deployment
         run: |
           zip -r build.zip .env.local package.json package-lock.json next.config.js public src
