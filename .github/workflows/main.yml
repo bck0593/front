@@ -30,7 +30,7 @@ jobs:
           ls -la .next || echo "'.next' directory does not exist"
 
       - name: Upload .next build output
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nextjs-build
           path: .next
