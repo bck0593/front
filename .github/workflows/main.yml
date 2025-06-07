@@ -1,4 +1,4 @@
-name: Build and Upload SSR Site
+name: Build and Upload Next.js App (SSR Ready)
 
 on:
   push:
@@ -24,8 +24,13 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload .next directory
+      - name: Show contents of .next directory
+        run: |
+          echo "=== .next directory contents ==="
+          ls -la .next || echo "'.next' directory does not exist"
+
+      - name: Upload .next build output
         uses: actions/upload-artifact@v3
         with:
-          name: next-build
+          name: nextjs-build
           path: .next
