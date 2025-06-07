@@ -1,4 +1,4 @@
-name: Build and Upload Next.js App (SSR Ready)
+name: Build and Deploy Next.js App to Azure
 
 on:
   push:
@@ -6,31 +6,27 @@ on:
       - main
 
 jobs:
-  build-and-upload:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build project
         run: npm run build
 
-      - name: Show contents of .next directory
-        run: |
-          echo "=== .next directory contents ==="
-          ls -la .next || echo "'.next' directory does not exist"
-
-      - name: Upload .next build output
-        uses: actions/upload-artifact@v4
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
         with:
-          name: nextjs-build
-          path: .next
+          app-name: app-001-step3-1-suzuyu-node-29
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: .
