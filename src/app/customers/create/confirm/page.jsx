@@ -1,13 +1,11 @@
-// /app/customers/create/confirm/page.tsx
 "use client";
+
+export const dynamic = "force-dynamic"; // これが必須！
 
 import OneCustomerInfoCard from "@/app/components/one_customer_info_card.jsx";
 import fetchCustomer from "./fetchCustomer";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
-// 重要：動的インポートでこのページのプリレンダリングを止める
-export const dynamic = "force-dynamic";
 
 export default function ConfirmPage() {
   const router = useRouter();
