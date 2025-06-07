@@ -1,13 +1,11 @@
 "use client";
 
-export const dynamic = "force-dynamic"; // これが必須！
-
 import OneCustomerInfoCard from "@/app/components/one_customer_info_card.jsx";
 import fetchCustomer from "./fetchCustomer";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
-export default function ConfirmPage() {
+function InnerConfirmPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const customer_id = searchParams.get("customer_id");
@@ -55,5 +53,13 @@ export default function ConfirmPage() {
         <div className="btn btn-primary m-4 text-2xl">戻る</div>
       </button>
     </div>
+  );
+}
+
+export default function ConfirmPage() {
+  return (
+    <Suspense fallback={<div>読み込み中...</div>}>
+      <InnerConfirmPage />
+    </Suspense>
   );
 }
