@@ -18,13 +18,17 @@ jobs:
         with:
           node-version: '18'
 
+      # ここで.env.localを生成する
+      - name: Create .env.local
+        run: |
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.FASTAPI_URL }}" > .env.local
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build project
         run: npm run build
 
-      # ★ ここで .next, node_modulesを含む全てをデプロイ
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
