@@ -1,15 +1,15 @@
 {
   "/_not-found/page": "/_not-found",
   "/favicon.ico/route": "/favicon.ico",
+  "/customers/create/page": "/customers/create",
   "/customers/check/page": "/customers/check",
   "/customers/create/confirm/page": "/customers/create/confirm",
   "/customers/delete/[id]/confirm/page": "/customers/delete/[id]/confirm",
-  "/customers/create/page": "/customers/create",
   "/customers/page": "/customers",
   "/customers/delete/[id]/page": "/customers/delete/[id]",
-  "/customers/read/[id]/page": "/customers/read/[id]",
-  "/customers/test/page": "/customers/test",
   "/page": "/",
+  "/customers/test/page": "/customers/test",
+  "/customers/read/[id]/page": "/customers/read/[id]",
   "/customers/update/[id]/page": "/customers/update/[id]",
   "/customers/update/[id]/confirm/page": "/customers/update/[id]/confirm"
 }
