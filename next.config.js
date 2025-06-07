@@ -1,6 +1,11 @@
+require('dotenv').config();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'standalone'
-      }
+  env: {
+    API_ENDPOINT: process.env.API_ENDPOINT,
+  },
+  output: 'export', // ← これを追加
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
