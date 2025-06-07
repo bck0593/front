@@ -16,7 +16,7 @@ export default function CreatePage() {
             const customerData = await createCustomer(formData); // ここで顧客データを作成
             console.log("Customer created with ID:", customerData.customer_id); // 顧客IDを確認
 
-            // 作成された顧客IDを使ってリダイレクト
+            // 作成された顧客IDを使ってリダイレク
             if (customerData.customer_id) {
                 router.push(`/customers/create/confirm?customer_id=${customerData.customer_id}`);
             } else {
