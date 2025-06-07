@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // 動的ルートなら output: 'export' は設定しないでOK
+  output: 'export', // ← ここを追加
   env: {
     API_ENDPOINT: process.env.API_ENDPOINT,
   },
-};
+}
 
-module.exports = nextConfig;
-
-
+module.exports = nextConfig
