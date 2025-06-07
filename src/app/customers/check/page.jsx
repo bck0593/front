@@ -10,15 +10,34 @@ async function fetchCustomer(id) {
   return res.json();
 }
 
-export default async function ReadPage({ query }) {
+export default async function ReadPage({ query = {} }) {
   const { id } = query;
-  const customerInfo = await fetchCustomer(id);
+
+  // idがない場合はエラー表示
+  if (!id) {
+    return (
+      <div className="alert alert-error">
+        顧客IDが指定されていません。
+      </div>
+    );
+  }
+
+  let customerInfo;
+  try {
+    customerInfo = await fetchCustomer(id);
+  } catch (e) {
+    return (
+      <div className="alert alert-error">
+        顧客情報の取得に失敗しました: {e.message}
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="alert alert-success">更新しました</div>
       <div className="card bordered bg-white border-blue-200 border-2 max-w-sm m-4">
-        <OneCustomerInfoCard {...customerInfo[0]} />
+        <OneCustomerInfoCard {...(customerInfo[0] ?? {})} />
       </div>
       <button className="btn btn-outline btn-accent">
         <a href="/customers">一覧に戻る</a>

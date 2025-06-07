@@ -1,7 +1,15 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js",
+  "/customers/check/page": "app/customers/check/page.js",
+  "/customers/create/confirm/page": "app/customers/create/confirm/page.js",
+  "/customers/delete/[id]/confirm/page": "app/customers/delete/[id]/confirm/page.js",
+  "/customers/create/page": "app/customers/create/page.js",
   "/customers/page": "app/customers/page.js",
+  "/customers/delete/[id]/page": "app/customers/delete/[id]/page.js",
+  "/customers/read/[id]/page": "app/customers/read/[id]/page.js",
+  "/customers/test/page": "app/customers/test/page.js",
+  "/page": "app/page.js",
   "/customers/update/[id]/page": "app/customers/update/[id]/page.js",
   "/customers/update/[id]/confirm/page": "app/customers/update/[id]/confirm/page.js"
 }

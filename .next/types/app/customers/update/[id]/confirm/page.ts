@@ -1,4 +1,4 @@
-// File: C:\Users\bck05\Desktop\Tech\03_Step3-1\LinkFastAPINext_practical-main_0516\frontend\src\app\customers\update\[id]\confirm\page.jsx
+// File: C:\Users\bck05\Desktop\Tech\03_Step3-1\LinkFastAPINext_practical-main\frontend\src\app\customers\update\[id]\confirm\page.jsx
 import * as entry from '../../../../../../../src/app/customers/update/[id]/confirm/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
