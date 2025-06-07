@@ -24,6 +24,7 @@ jobs:
       - name: Build project
         run: npm run build
 
+      # ★ ここで .next, node_modulesを含む全てをデプロイ
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
