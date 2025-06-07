@@ -3,9 +3,8 @@ require('dotenv').config();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT,
+    NEXT_PUBLIC_API_ENDPOINT: process.env.NEXT_PUBLIC_API_ENDPOINT,
   },
-  // ここに output: 'export' は書かない！
 };
 
 module.exports = nextConfig;
