@@ -1,3 +1,11 @@
+name: Build and Deploy Next.js App to Azure
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -14,10 +22,11 @@ jobs:
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.FASTAPI_URL }}" > .env.local
 
-      # 依存関係だけインストールしてテストやlintしたい場合はここで
+      # 任意: テストやLintを実行したい場合のみ
       - name: Install dependencies (for test only)
         run: npm ci
 
+      # 必要な本番ファイルだけをzipアーカイブ
       - name: Archive app for deployment
         run: |
           zip -r build.zip .env.local package.json package-lock.json next.config.js public src
