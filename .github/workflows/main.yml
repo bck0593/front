@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '18'
 
-      # ここで.env.localを生成する
+      # .env.localを生成（環境変数を渡す）
       - name: Create .env.local
         run: |
           echo "NEXT_PUBLIC_API_URL=${{ secrets.FASTAPI_URL }}" > .env.local
@@ -29,9 +29,14 @@ jobs:
       - name: Build project
         run: npm run build
 
+      # .next, node_modules, package.json, next.config.js, public など本番に必要なものをzipでまとめる
+      - name: Archive production build
+        run: |
+          zip -r build.zip .next node_modules public package.json next.config.js .env.local
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: app-001-step3-1-suzuyu-node-29
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: .
+          package: build.zip
