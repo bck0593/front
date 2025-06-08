@@ -29,6 +29,7 @@ jobs:
       - name: Build Next.js
         run: npm run build
 
+      # 必要なファイルだけzip化する
       - name: Archive app for deployment
         run: |
           zip -r build.zip .next .env.local package.json package-lock.json next.config.js public src
